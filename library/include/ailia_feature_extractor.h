@@ -86,7 +86,7 @@ void AILIA_API ailiaDestroyFeatureExtractor(struct AILIAFeatureExtractor* fextra
  * \~japanese
  * @brief 特徴の抽出を行います。
  * @param fextractor                  特徴抽出オブジェクトポインタ
- * @param dst                         特徴の格納先ポインタ(numeric型)
+ * @param dst                         特徴の格納先ポインタ(float型)
  * @param dst_size                    dstのサイズ(byte)
  * @param src                         画像データ(32bpp)
  * @param src_stride                  1ラインのバイト数
@@ -99,7 +99,7 @@ void AILIA_API ailiaDestroyFeatureExtractor(struct AILIAFeatureExtractor* fextra
  * \~english
  * @brief Performs feature extraction.
  * @param fextractor                  A feature extraction instance pointer
- * @param dst                         A pointer to the storage location of the feature (numeric type)
+ * @param dst                         A pointer to the storage location of the feature (float type)
  * @param dst_size                    The size of the dst (bytes)
  * @param src                         Image data (32 bpp)
  * @param src_stride                  The number of bytes in 1 line
@@ -117,9 +117,9 @@ int AILIA_API ailiaFeatureExtractorCompute(struct AILIAFeatureExtractor* fextrac
  * @param fextractor                  特徴抽出オブジェクトポインタ
  * @param distance                    特徴間距離
  * @param distance_type               特徴間距離の種別
- * @param feature1                    一方の特徴の格納先ポインタ(numeric型)
+ * @param feature1                    一方の特徴の格納先ポインタ(float型)
  * @param feature1_size               dstのサイズ(byte)
- * @param feature2                    他方の特徴の格納先ポインタ(numeric型)
+ * @param feature2                    他方の特徴の格納先ポインタ(float型)
  * @param feature2_size               dstのサイズ(byte)
  * @return
  *   成功した場合は \ref AILIA_STATUS_SUCCESS 、そうでなければエラーコードを返す。
@@ -129,9 +129,9 @@ int AILIA_API ailiaFeatureExtractorCompute(struct AILIAFeatureExtractor* fextrac
  * @param fextractor                  A feature extraction instance pointer
  * @param distance                    A distance in feature space
  * @param distance_type               The type of the distance in feature space
- * @param feature1                    A pointer to the storage location of one feature (numeric type)
+ * @param feature1                    A pointer to the storage location of one feature (float type)
  * @param feature1_size               The size of the feature1 (bytes)
- * @param feature2                    A pointer to the storage location of the other feature (numeric type)
+ * @param feature2                    A pointer to the storage location of the other feature (float type)
  * @param feature2_size               The size of the feature2 (bytes)
  * @return
  *   If this function is successful, it returns  \ref AILIA_STATUS_SUCCESS , or an error code otherwise.
