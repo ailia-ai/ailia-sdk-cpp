@@ -178,7 +178,7 @@ extern "C" {
 /**
  * \~japanese
  * @brief 画像のフォーマットを変換します。
- * @param dst                  変換後画像の格納先(numeric型、sizeof(float) * dst_width * dst_height *
+ * @param dst                  変換後画像の格納先(float型、sizeof(float) * dst_width * dst_height *
  * チャンネル数(解説参照)以上のサイズを確保すること)
  * @param dst_width            変換後画像の横幅
  * @param dst_height           変換後画像の高さ
@@ -199,7 +199,7 @@ extern "C" {
  *
  * \~english
  * @brief Converts image formats.
- * @param dst                  The storage location of the image after conversion (numeric type; a size of sizeof(float)
+ * @param dst                  The storage location of the image after conversion (float type; a size of sizeof(float)
  * * dst_width * dst_height * num_of_channel(See Description) or more must be allocated.)
  * @param dst_width            The width of the image after conversion
  * @param dst_height           The height of the image after conversion

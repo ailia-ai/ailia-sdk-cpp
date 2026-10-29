@@ -340,6 +340,19 @@ extern "C" {
 #define AILIA_STATUS_NDIMENSION_SHAPE (-23)
 /**
  * \~japanese
+ * @def AILIA_STATUS_ALREADY_LOADED
+ * @brief すでにモデルを読み込み済みであることを示す
+ * @remark
+ * 同一の AILIANetwork インスタンスで複数回モデルを読み込もうとしました。単一の AILIANetwork インスタンスで行えるモデルの読み込みは1回のみです。
+ *
+ * \~english
+ * @def AILIA_STATUS_ALREADY_LOADED
+ * @brief Model file was already loaded
+ * @remark AILIANetwork instance cannot load models multiple times.
+ */
+#define AILIA_STATUS_ALREADY_LOADED (-24)
+/**
+ * \~japanese
  * @def AILIA_STATUS_OTHER_ERROR
  * @brief 不明なエラー
  * @remark その他のエラーが発生しました。ailiaGetErrorDetail()
@@ -839,9 +852,9 @@ int AILIA_API ailiaGetOutputShapeND(struct AILIANetwork* net, unsigned int* shap
  * \~japanese
  * @brief 推論を行い推論結果を取得します。
  * @param net ネットワークオブジェクトポインタ
- * @param dest 推論結果の書き出し先バッファにX,Y,Z,Wの順でnumeric型で格納  サイズはネットファイルのoutputSizeとなる
+ * @param dest 推論結果の書き出し先バッファにX,Y,Z,Wの順でfloat型で格納  サイズはネットファイルのoutputSizeとなる
  * @param dest_size 推論結果の書き出し先バッファのbyte数
- * @param src 推論データ X,Y,Z,Wの順でnumeric型で格納 サイズはネットファイルのinputSizeとなる
+ * @param src 推論データ X,Y,Z,Wの順でfloat型で格納 サイズはネットファイルのinputSizeとなる
  * @param src_size 推論データのbyte数
  * @return
  *   成功した場合は \ref AILIA_STATUS_SUCCESS 、そうでなければエラーコードを返す。
@@ -851,10 +864,10 @@ int AILIA_API ailiaGetOutputShapeND(struct AILIANetwork* net, unsigned int* shap
  * \~english
  * @brief Performs the inferences and provides the inference result.
  * @param net A network instance pointer
- * @param dest The result is stored in the inference result destination buffer as numeric type data in the order of X,
+ * @param dest The result is stored in the inference result destination buffer as float type data in the order of X,
  * Y, Z, and W. The buffer has the same size as the network file outputSize.
  * @param dest_size The number of bytes for the destination buffer for the inference result
- * @param src The input is stored as numeric type data in the order of the inference data X, Y, Z, and W. The input has
+ * @param src The input is stored as float type data in the order of the inference data X, Y, Z, and W. The input has
  * the same size as the network file inputSize.
  * @param src_size The number of bytes of the inference data
  * @return
@@ -976,7 +989,7 @@ int AILIA_API ailiaGetBlobShapeND(struct AILIANetwork* net, unsigned int* shape,
  * \~japanese
  * @brief 推論時の内部データ(Blob)を取得します。
  * @param net ネットワークオブジェクトポインタ
- * @param dest 推論結果の書き出し先バッファにX,Y,Z,Wの順でnumeric型で格納
+ * @param dest 推論結果の書き出し先バッファにX,Y,Z,Wの順でfloat型で格納
  * @param dest_size 推論結果の書き出し先バッファのbyte数
  * @param blob_idx blobのインデックス (0～ ailiaGetBlobCount() -1)
  * @return
@@ -987,7 +1000,7 @@ int AILIA_API ailiaGetBlobShapeND(struct AILIANetwork* net, unsigned int* shape,
  * \~english
  * @brief Gets the internal data (blob) during inference.
  * @param net A network instance pointer
- * @param dest The result is stored in the inference result destination buffer as numeric type data in the order of X,
+ * @param dest The result is stored in the inference result destination buffer as float type data in the order of X,
  * Y, Z, and W.
  * @param dest_size The number of bytes for the inference result destination buffer
  * @param blob_idx The index of the blob (0 to  ailiaGetBlobCount() -1)
@@ -1206,7 +1219,7 @@ int AILIA_API ailiaGetBlobIndexByInputIndex(struct AILIANetwork* net, unsigned i
  * \~japanese
  * @brief 指定したBlobに入力データを与えます。
  * @param net ネットワークオブジェクトポインタ
- * @param src 推論データ X,Y,Z,Wの順でnumeric型で格納
+ * @param src 推論データ X,Y,Z,Wの順でfloat型で格納
  * @param src_size 推論データのbyte数
  * @param blob_idx 入力するblobのインデックス
  * @return
@@ -1219,7 +1232,7 @@ int AILIA_API ailiaGetBlobIndexByInputIndex(struct AILIANetwork* net, unsigned i
  * \~english
  * @brief Provides the specified blob with the input data.
  * @param net A network instance pointer
- * @param src The inference data is stored as numeric type data in the order of X, Y, Z, and W.
+ * @param src The inference data is stored as float type data in the order of X, Y, Z, and W.
  * @param src_size The number of bytes of the inference data
  * @param blob_idx The index of the blob for input
  * @return
@@ -1721,13 +1734,23 @@ int AILIA_API ailiaDisableLayerFusion(struct AILIANetwork* net);
 #define AILIA_PROFILE_DISABLE (0x00)
 /**
  * \~japanese
- * レイヤー別の処理時間を計測します。複数回推論した場合は平均値が保存されます。
+ * レイヤー別の処理時間を計測します。複数回推論した場合は初回を除いた平均値が保存されます。
  *
  * \~english
  * Measure the processing time for each layer.
  * If you infer multiple times, the average value excluding the first execution is saved.
  */
 #define AILIA_PROFILE_AVERAGE (0x01)
+
+/**
+ * \~japanese
+ * ネットワーク全体の処理時間を計測します。複数回推論した場合は初回を除いた平均値が保存されます。
+ *
+ * \~english
+ * Measure the processing time for the entire network.
+ * If you infer multiple times, the average value excluding the first execution is saved.
+ */
+#define AILIA_PROFILE_NETWORK (0x02)
 
 /**
  * \~japanese
